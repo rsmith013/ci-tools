@@ -3,6 +3,8 @@
 #   This script requires some environment variables:
 #       DNSIMPLE_ACCESS_TOKEN
 #   Optional environment variables:
+#       These are only needed if running in an environment that is not already running with an assumed role with the correct permissions.
+#       You need "elasticloadbalancing:DescribeLoadBalancers"
 #       AWS_ACCESS_KEY_ID           AWS key with permission to query Loadbalancer resources
 #       AWS_SECRET_ACCESS_KEY
 #
@@ -24,6 +26,8 @@ function usage {
     echo "  DNSIMPLE_ZONE       The name of the zone to check in DNSimple"
     echo "  -r REGION           Specify the AWS region. Default: eu-west-2"
     echo "  -s SUBDOMAIN.       Specify the subdomain e.g.  mydendra-review-develop from {mydendra-review-develop}.sk.ai. Default: '*'"
+    echo
+    echo "For authentication this script expects either AWS KEY and SECRET or to be run in an environment with assumerole"
     exit 1
 }
 
@@ -64,7 +68,6 @@ DNSIMPLE_ZONE=$2
 # Check we have required env vars
 ALL_REQS=1
 
-# We can either use AWS_ROLE_ARN or access key credentials
 if [[ -z ${DNSIMPLE_ACCESS_TOKEN} ]]; then
     ALL_REQS=0  
     echo "$(tput setaf 1)REQUIRED env var DNSIMPLE_ACCESS_TOKEN has not been set.$(tput sgr0)"
