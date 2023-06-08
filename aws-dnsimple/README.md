@@ -10,11 +10,16 @@ simple scripts.
 
 A wrapper shell script which retrives the DNS Name from and AWS loadbalancer and updates a given DNSimple CNAME to point to this target.
 
+You can either supply AWS key and secret or make use of assume role by providing the AWS_ROLE_ARN as an environment variable.
+If you use the ROLE_ARN, the key and secret are not required.
+
 ```bash
-#   This script expects some environment variables
+#   This script expects some environment variables:
 #       AWS_ACCESS_KEY_ID
 #       AWS_SECRET_ACCESS_KEY
 #       DNSIMPLE_ACCESS_TOKEN
+#   Optional environment variables:
+#       AWS_ROLE_ARN
 #       
 #
 #   Usage: $(basename $0) NAMES DNSIMPLE_ZONE [-r REGION] [-h]
